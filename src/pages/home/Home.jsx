@@ -1,11 +1,11 @@
 import Navbar from "../../components/navbar/Navbar";
-import Header from "../../header/Header";
-import Featured from "../../featured/Featured";
-import PropertyList from "../../propertyList/PropertyList";
+import Header from "../../components/header/Header";
+import Featured from "../../components/featured/Featured";
+import PropertyList from "../../components/propertyList/PropertyList";
 import "./home.css";
-import FeatureProperties from "../../featureProperties/FeatureProperties";
-import MailList from "../../mailList/MailList";
-import Footer from "../../footer/Footer";
+import FeatureProperties from "../../components/featureProperties/FeatureProperties";
+import MailList from "../../components/mailList/MailList";
+import Footer from "../../components/footer/Footer";
 
 const Home = () => {
   return (
