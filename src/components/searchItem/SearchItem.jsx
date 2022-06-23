@@ -4,7 +4,7 @@ const SearchItem = () => {
   return (
     <div className="searchItem">
       <img
-        src="https://cf.bstatic.com/xdata/images/hotel/square600/261707778.webp?k=fa6b6128468ec15e81f7d076b6f2473fa3a80c255582f155cae35f9edbffdd78&o=&s=1"
+        src="https://cdn.vox-cdn.com/thumbor/7Uk_gQikpw0skKSgi0NRjPGj0z8=/0x0:1800x1200/1820x1213/filters:focal(853x406:1141x694):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/59058095/Web_09.0.jpg"
         alt=""
         className="siImg"
       />
