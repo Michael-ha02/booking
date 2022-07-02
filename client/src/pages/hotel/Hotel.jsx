@@ -10,37 +10,34 @@ import {
   faCircleXmark,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import useFetch from "../../hooks/useFetch";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { SearchContext } from "../../context/SearchContext";
+import { AuthContext } from "../../context/AuthContext";
+import Reserve from "../../components/reserve/Reserve";
 
 const Hotel = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const { data, loading, error } = useFetch(`/hotels/find/${id}`);
-  // const photos = [
-  //   {
-  //     src: "https://cdn.vox-cdn.com/thumbor/7Uk_gQikpw0skKSgi0NRjPGj0z8=/0x0:1800x1200/1820x1213/filters:focal(853x406:1141x694):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/59058095/Web_09.0.jpg",
-  //   },
-  //   {
-  //     src: "https://cdn.vox-cdn.com/thumbor/u26Pzbl-SJIb4qXWnhuJANBeIwI=/0x0:1800x1200/1720x0/filters:focal(0x0:1800x1200):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/10441203/Web_05.jpg",
-  //   },
-  //   {
-  //     src: "https://cdn.vox-cdn.com/thumbor/JzpMP7VabGhL0_x85Ba6fbdx99g=/0x0:1800x1200/1720x0/filters:focal(0x0:1800x1200):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/10441197/Web_02.jpg",
-  //   },
-  //   {
-  //     src: "https://cdn.vox-cdn.com/thumbor/fKKkox4FTfPzax69v6C2GN5BgYI=/0x0:1800x1200/1720x0/filters:focal(0x0:1800x1200):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/10441199/Web_04.jpg",
-  //   },
-  //   {
-  //     src: "https://cdn.vox-cdn.com/thumbor/S4yFsyr4BklFIaF9XvUUruk_avI=/0x0:1800x1200/1720x0/filters:focal(0x0:1800x1200):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/10441219/Web_10.jpg",
-  //   },
-  //   {
-  //     src: "https://cdn.vox-cdn.com/thumbor/JF7RK-hIAVMdmSiDLY4UioCi5vo=/0x0:1800x1200/1720x0/filters:focal(0x0:1800x1200):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/10441215/Web_12.jpg",
-  //   },
-  // ];
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const { dates, options } = useContext(SearchContext);
+
+  const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+  function dayDifference(date1, date2) {
+    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
+    return diffDays;
+  }
+
+  const days = dayDifference(dates[0].endDate, dates[0].startDate);
 
   const handleOpen = (i) => {
     setSlideNumber(i);
@@ -59,6 +56,13 @@ const Hotel = () => {
     setSlideNumber(newSlideNumber);
   };
 
+  const handleClick = () => {
+    if (user) {
+      setOpenModal(true);
+    } else {
+      navigate("/login");
+    }
+  };
   return (
     <div>
       <Navbar />
@@ -125,15 +129,16 @@ const Hotel = () => {
                 <p className="hotelDesc">{data.desc}</p>
               </div>
               <div className="hotelDetailsPrice">
-                <h1>Perfect for a 9-night stay!</h1>
+                <h1>Perfect for a {days}-night stay!</h1>
                 <span>
                   Located in the real heart of Krakow, this property has an
                   excellent location score of 9.8!
                 </span>
                 <h2>
-                  <b>$945</b> (9 nights)
+                  <b>${days * data.cheapestPrice * options.room}</b> ({days}{" "}
+                  nights)
                 </h2>
-                <button>Reserve or Book Now!</button>
+                <button onClick={handleClick}>Reserve or Book Now!</button>
               </div>
             </div>
           </div>
@@ -141,6 +146,7 @@ const Hotel = () => {
           <Footer />
         </div>
       )}
+      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} />}
     </div>
   );
 };
