@@ -1,6 +1,12 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was built by MERN (MongoDB, Express, React, Node)
+MongoDB - document database
+Express(.js) - Node.js web framework
+React(.js) - a client-side JavaScript framework
+Node(.js) - the premier JavaScript web server
+
 
 ## Available Scripts
 
