@@ -4,10 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 This project was built by MERN (MongoDB, Express, React, Node)
 <ul>
-  MongoDB - document database
-Express(.js) - Node.js web framework
-React(.js) - a client-side JavaScript framework
-Node(.js) - the premier JavaScript web server
+  <li> MongoDB - document database </li>
+  <li> Express(.js) - Node.js web framework </li>
+  <li> React(.js) - a client-side JavaScript framework </li>
+  <li> Node(.js) - the premier JavaScript web server </li>
 </ul>
 
 
